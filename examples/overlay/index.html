@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hyper Parametrizable Vanilla Menu</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css"
+    integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../../dist/css/overlay.css" />
+  
+  <style>
+    /* default overlay is white, so we need to change it to black */
+    #overlay {
+      background-color:rgba(0, 0, 0, 0.569);
+    }
+    /* default spinner is black, so we need to change it to white */
+    #overlay>i {
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="overlay"><i class="fa-solid fa-sync fa-spin fa-5x is-loaded" style="--fa-animation-duration: 5s;"></i></div>
+
+  <div id='content' class="content">
+    Your content goes here!<br><br>
+    <button onclick="showOverlay()">Show Overlay</button><br><br>
+    <button onclick="showOverlayCH()">Show Overlay - Click Handler</button><br><br>
+    <button onclick="showLoading()">Show Loading</button><br>
+  </div>
+
+  <script src="../../dist/js/overlay.min.js"></script>
+
+  <script>
+    function showOverlay() {
+      HpvMenu.overlay.show(false, false);
+    }
+
+    function showOverlayCH() {
+      // reset default click handler
+      HpvMenu.overlay.clickHandler = function() {
+        alert("You clicked the overlay!");
+        HpvMenu.overlay.hide();
+      };
+
+      HpvMenu.overlay.show(false, false);
+    }
+
+    function showLoading() {
+      HpvMenu.overlay.showLoading( false, false );
+
+      // by default loading has no eventlistener attached, so hideLoading() is called by an external event from your app
+      setTimeout(function() {
+        HpvMenu.overlay.hideLoading();
+      }, 3000);
+    }
+  </script>
+
+</body>
+
+</html>
