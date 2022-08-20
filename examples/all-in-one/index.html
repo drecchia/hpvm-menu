@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hyper Parametrizable Vanilla Menu</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css"
+    integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../../dist/css/all.css" />
+
+  <style>
+    #menuItems.nav.menu-bookmarks>li>a {
+      padding: 10px 15px 10px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    #menuItems.nav.menu-bookmarks>li>a>div {
+      display: flex;
+      flex-direction: column;
+      width: -webkit-fill-available;
+    }
+
+    #menuItems.nav.menu-bookmarks>li>a>div>span:nth-child(1) {
+      font-weight: bold;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav.menu-bookmarks>li>a>div>span:nth-child(2) {
+      color: rgb(82, 82, 82);
+      font-style: italic;
+      width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #menuItems.nav.menu-alerts>ul>li>a {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+
+    #menuItems.nav.menu-alerts>ul>li>a>div:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #menuItems.nav.menu-alerts>ul>li>a>div:nth-child(1)>span:nth-child(1) {
+      font-weight: bold;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav.menu-alerts>ul>li>a>div:nth-child(1)>span:nth-child(2) {
+      color: rgb(82, 82, 82);
+      font-style: italic;
+    }
+
+    #menuItems.nav.menu-alerts>ul>li>a>div:nth-child(2) {
+      display: flex;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav .sidebar-anchor-no-href {
+      color: rgb(217 65 65 / 84%);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="icon-bar container">
+    <div class="icon-bar-top">
+    </div>
+    <div class="icon-bar-bottom">
+    </div>
+  </div>
+
+  <div id="overlay"><i class="fa-solid fa-sync fa-spin fa-5x is-loaded" style="--fa-animation-duration: 5s;"></i></div>
+
+  <div class='wrapper' />
+
+  <div class='sidebar'>
+    <div class='sidebar-widelogo'>
+      <img src="https://via.placeholder.com/220x55/e0e0e0/000000/?text=LOGO+HERE" alt="Logo" />
+    </div>
+    <div id='sidebarTitle' class='sidebar-title'>
+      Title Here
+    </div>
+    <div class='search'>
+      <input class='searchInput' placeholder='Procurar no menu...' type="text"
+        onkeyup="HpvMenu.sidebar.filterFn(this, 'menuItems')" />
+      <button class='btn btn-outline-success' type='button'><i class='fas fa-search'></i></button>
+    </div>
+    <ul id='menuItems' class='nav'>
+    </ul>
+    <div id='sideBarStatusText'>
+      <p>No item available</p>
+    </div>
+  </div>
+
+  <div id='content' class="content">
+    <p>Your content goes here!<br> You can click on this div to close sidebar.</p>
+  </div>
+
+  <script src="../../dist/js/all.min.js"></script>
+
+  <script>
+
+    // side bar item click handler
+    function handleSidebarClick(event, entry, item) {
+      if (item.href) {
+        // change iframe src
+        document.getElementById('iContent').src = item.href;
+        HpvMenu.mixin.closeSideBar();
+        HpvMenu.overlay.showLoading();
+      }
+    }
+
+    ////////////// ICONBAR STARTS HERE ////////////////
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'classes': ['mini-logo'], // custom class if needed
+      'innerHtml': '<img src="https://www.svgrepo.com/show/366969/drgn.svg" width="32" heigh="32">',
+      'tooltiptext': 'Vortus Solutions',
+      'onClick': function (event) {
+        // open site on new window
+        window.open('https://vortus.solutions', '_blank');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-house-chimney-user"></i>',
+      'tooltiptext': 'User Home',
+      'onClick': function (event) {
+        // mixin contains helper functions that connects all the components
+        // in this case, it will mark iconbar as selected and open sidebar and show overlay
+        HpvMenu.mixin.handleIconBarClick(event, 'user_home');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-bell"></i>',
+      'tooltiptext': 'Alerts',
+      'onClick': function (event) {
+        // mixin contains helper functions that connects all the components
+        // in this case, it will mark iconbar as selected and open sidebar and show overlay
+        HpvMenu.mixin.handleIconBarClick(event, 'alerts');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-star"></i>',
+      'tooltiptext': 'Bookmarks',
+      'onClick': function (event) {
+        // mixin contains helper functions that connects all the components
+        // in this case, it will mark iconbar as selected and open sidebar and show overlay
+        HpvMenu.mixin.handleIconBarClick(event, 'bookmarks');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-location-dot"></i>',
+      'tooltiptext': 'Map',
+      'onClick': function (event) {
+        // mixin contains helper functions that connects all the components
+        // in this case, it will mark iconbar as selected and open sidebar and show overlay
+        HpvMenu.mixin.handleIconBarClick(event, 'map');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-bottom',
+      'classes': ['danger'],
+      'innerHtml': '<i class="fa fa-sign-out"></i>',
+      'tooltiptext': 'Exit',
+      'onClick': function (event) {
+        alert('exit clicked');
+        console.log('exit clicked');
+        HpvMenu.mixin.closeSideBar();
+      }
+    });
+
+    ///////////// SIDE BAR STARTS HERE /////////////////
+    HpvMenu.sidebar.registerEntry({
+      'id': 'bookmarks',
+      'title': 'Bookmarks',
+      'overlay': true, // show overlay when sidebar is open
+      'sortItens': true, // sort items alphabetically
+      'search': {
+        'enabled': true, // enable search
+        'mode': 'fuzzy', // search mode: fuzzy, normal or disabled
+        'fields': ['title', 'savedPath'], // fuzzy search fields
+      },
+      // you can load itens from another source
+      'loadItens': function () {
+        // in this case, we are loading from internal managed favorites
+        return HpvMenu.sidebar.fav;
+      },
+      // you can specify your own item template, or build it from internal constructors
+      'itemRenderer': function (target, entry, item, path) {
+        // internal constructors
+        let domItem = HpvMenu.sidebar._createItem(target, entry, item, false);
+
+        let divText = document.createElement('div');
+        let span1 = document.createElement('span');
+        let span2 = document.createElement('span');
+
+        span1.innerHTML = item.title;
+        // you can use item item.savedPath to show the path of the item in favorites
+        // or item.path to render the item with custom template
+        span2.innerHTML = item.savedPath.join(' > ');
+
+        divText.appendChild(span1);
+        divText.appendChild(span2);
+
+        domItem.firstChild.childNodes[1].replaceWith(divText);
+
+        return domItem;
+      },
+      'onItemClick': function (event, entry, item) {
+        // your item handle function
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'map',
+      'title': 'Map',
+      'overlay': true,
+      'sortItens': true,
+      'search': false,
+      'itens': [
+        {
+          'type': 'entry', // required
+          'title': 'My Devices', // required
+          'tags': ['phone', 'bike', 'gadget'], // you can set extra fields to filter items
+          'innerHtml': '<i class="fa-solid fa-users-viewfinder"></i>', // you can set an icon
+          'href': '#', // if you do not declare href, you can use class .sidebar-anchor-no-href to customize itens
+          'abc': '123', // you can even set extra fields for your own use
+        },
+        {
+          'type': 'entry',
+          'title': 'My Puppies',
+          'tags': ['dog', 'cat'],
+          'innerHtml': '<i class="fa-solid fa-person-rays"></i>',
+          'href': '#',
+        },
+        {
+          'type': 'entry',
+          'title': 'Item Without Href',
+          'innerHtml': '<i class="fa-solid fa-person"></i>',
+        }
+      ],
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'user_home',
+      'title': 'User Home',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': ['title', 'tags'],
+      },
+      'itens': [
+        {
+          'type': 'entry',
+          'title': 'Change Password',
+          'innerHtml': '<i class="fa-solid fa-key"></i>',
+          'href': '#'
+        },
+        {
+          'type': 'entry',
+          'title': 'My Home',
+          'innerHtml': '<i class="fa-solid fa-house"></i>',
+          'order': 1, // you can force the order of the item, even when its sorted
+          'href': '#'
+        },
+        {
+          'type': 'entry',
+          'title': 'My Contracts',
+          'route': 'jur-contratos',
+          'innerHtml': '<i class="fa-solid fa-file-signature"></i>',
+          'href': '#'
+        },
+        {
+          'type': 'entry',
+          'title': 'My Bills',
+          'innerHtml': '<i class="fa-solid fa-money-bill"></i>',
+          'href': '#'
+        },
+        {
+          'type': 'entry',
+          'title': 'My Bank',
+          'tags': ['account', 'money'],
+          'innerHtml': '<i class="fa-solid fa-file-invoice-dollar"></i>',
+          'href': '#'
+        },
+        {
+          'type': 'entry',
+          'title': 'News',
+          'tags': ['news', 'notices'],
+          'innerHtml': '<i class="fa-solid fa-newspaper"></i>',
+          'href': '#'
+        },
+      ],
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'alerts',
+      'title': 'Alerts',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': ['title', 'subtitle'],
+      },
+      'itens': [
+        {
+          'type': 'divide', 'title': 'Client A', 'childs': [
+            { 'type': 'entry', 'title': 'AAC0007', 'subtitle': 'Over speed', 'color': 'green' },
+            { 'type': 'entry', 'title': 'AAA0001', 'subtitle': 'Panic', 'color': 'purple' },
+          ]
+        },
+        {
+          'type': 'divide', 'title': 'Client B', 'childs': [
+            { 'type': 'entry', 'title': 'AAA0002', 'subtitle': 'No Transmission', 'color': 'white' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Out of route', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Out of route', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Out of route', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Out of route', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Out of route', 'color': 'red' },
+          ]
+        },
+      ],
+      'itemRenderer': function (target, entry, item) {
+        let color = item.color || 'white';
+
+        let li = document.createElement('li');
+        let anchor = document.createElement('a');
+        let div = document.createElement('div');
+        let divTime = document.createElement('div');
+        let span1 = document.createElement('span');
+        let span2 = document.createElement('span');
+
+        li.style.boxShadow = "inset 5px 0 0 " + color + ", inset 6px 0 0 #222";
+        span1.innerHTML = item.title;
+        span2.innerHTML = item.subtitle;
+        divTime.innerHTML = '15:29';
+
+        div.appendChild(span1);
+        div.appendChild(span2);
+        anchor.appendChild(div);
+        anchor.appendChild(divTime);
+        li.appendChild(anchor);
+
+        return li;
+      },
+      'onItemClick': function (event, entry, item) {
+        console.log('item click alertas: ', item);
+      }
+    });
+  </script>
+</body>
+
+</html>
