@@ -1,0 +1,73 @@
+.icon-bar .active {
+	background: #414141;
+	color: white;
+  }
+
+  .tooltip .tooltiptext {
+	background-color: black;
+  }
+
+  .tooltip .tooltiptext::after {
+	border-color: transparent black transparent transparent;
+  }
+
+  .sidebar {
+	background: #414141;
+  }
+
+  .title {
+	background: #2a2a2a;
+  }
+
+  #menuItems.nav li a {
+	color: #eee;
+  }
+
+  #menuItems.nav .sidebar-child li a {
+	color: #eee;
+  }
+
+  #menuItems.nav li a:hover {
+	background: #7a7777;
+  }
+
+  .nav-right.nav-star {
+	color: #414141;
+  }
+
+  .sidebar-child .nav-right.nav-star {
+	color: #2f2f2f;
+  }
+
+  .sidebar-child .nav-right.nav-star-active {
+	color: yellow;
+  }
+
+  .nav-right.nav-star-active {
+	color: yellow;
+  }
+
+  .nav-right.nav-star:hover:not(.nav-star-active) {
+	color: #2f2f2f;
+  }
+
+  .sidebar-divide {
+	box-shadow: inset 0px 0px 7px 2px #181818;
+  }
+
+  .sidebar-child {
+	background-color: #2f2f2f;
+	box-shadow: inset 0px 0px 7px 2px #181818;
+  }
+
+  .nav li a:hover {
+	background: #444;
+  }
+
+  .sidebar-widelogo {
+	background-color: #505051;
+  }
+
+  .overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+  }

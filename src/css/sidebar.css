@@ -1,0 +1,210 @@
+.sidebar {
+	font-family: Arial, Helvetica, Verdana;
+	font-size: 14px;
+	color: #666;
+	background: #e0e0e0;
+	overflow-x: hidden;
+	line-height: 18px;
+	position: absolute;
+	width: 270px;
+	height: 100vh;
+
+}
+
+.wrapper {
+	display: flex;
+	min-height: 100%;
+	width: 100%;
+}
+
+.content {
+	flex: 1;
+	background: #eee;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+	transform: translate3d(0, 0, 0);
+	transition: transform .3s;
+}
+
+.content.isOpen {
+	transform: translate3d(270px, 0, 0);
+}
+
+.sidebar-widelogo {
+	border-bottom: white;
+	border-bottom-style: dashed;
+	border-width: 1px;
+	background-color: #e0e0e0;
+	border-color: darkgrey;
+	text-align: center;
+}
+
+.sidebar-title {
+	font-size: 14px;
+	line-height: 48px;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #eee;
+	background: #a1a1a1;
+	border-bottom: 1px;
+	border-bottom-style: dashed;
+	border-color: darkgrey;
+}
+
+#menuItems.nav {
+	list-style: none;
+	padding-inline-start: 0px;
+}
+
+ul#menuItems:empty {
+	margin: 0;
+	padding: 0;
+}
+
+#menuItems.nav li a {
+	position: relative;
+	padding: 15px 15px 15px 15px;
+	font-size: 12px;
+	color: #4a4a4a;
+	border-bottom: 1px solid #222;
+	cursor: pointer;
+	display: block;
+	text-decoration: none;
+}
+
+#menuItems.nav .sidebar-dropdown-child li a {
+	color: black;
+}
+
+#menuItems.nav li a:before {
+	font: 14px fontawesome;
+	position: absolute;
+	top: 16px;
+	left: 20px;
+}
+
+#menuItems .nav-right {
+	position: absolute;
+	right: 20px;
+	font-size: 15px;
+}
+
+.nav-right.nav-star {
+	color: #e0e0e0;
+}
+
+.sidebar-divide-child {
+	padding-inline-start: 0px;
+}
+
+.sidebar-dropdown-child .nav-right.nav-star {
+	color: #bbb;
+}
+
+.sidebar-dropdown-child .nav-right.nav-star-active {
+	color: #0084ff;
+}
+
+/* Mouse Down */
+.nav-right.nav-star:active {
+	transform: scale(1.5);
+}
+
+.nav-right.nav-star-active {
+	color: #0084ff;
+}
+
+.nav-right.nav-star:hover:not(.nav-star-active) {
+	color: #e0e0e0;
+}
+
+.sidebar-divide {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 75%;
+	text-transform: uppercase;
+	background-color: #7d7d7d;
+	color: white;
+	padding: 5px 5px 5px 15px;
+}
+
+.sidebar-dropdown-child {
+	background-color: #bbb;
+	padding-inline-start: 0px;
+	display: none;
+}
+
+.sidebar-dropdown-open .sidebar-dropdown-child {
+	display: block;
+}
+
+.sidebar-dropdown-open-filter .sidebar-dropdown-child {
+	display: block;
+}
+
+@media screen and (max-height: 590px) {
+	.nav li a {
+		padding: 10px 15px 10px 15px;
+	}
+
+	.nav li a:before {
+		top: 10px;
+	}
+}
+
+@media screen and (min-height: 590px) and (max-height: 750px) {
+	.nav li a {
+		padding: 12px 15px 12px 15px;
+	}
+
+	.nav li a:before {
+		top: 12px;
+	}
+}
+
+.nav li a:hover {
+	background: #a1a1a1;
+}
+
+#menuItems.nav li a:hover {
+	background: #f5f5f5;
+}
+
+/* nao estamos marcando menu do sidebar como ativo */
+.nav li a.active {
+	box-shadow: inset 5px 0 0 #5b5, inset 6px 0 0 #222;
+	background: #444;
+}
+
+.nav>li>a>i {
+	padding-right: 15px;
+	font-size: 16px;
+	width: 16px;
+}
+
+.fa-transparent {
+	color: transparent;
+}
+
+#sideBarStatusText {
+	display: flex;
+	justify-content: center;
+}
+
+.arrow {
+	border: solid #a7a7a7;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+}
+
+.arrow.arrow-right {
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+}
+
+.arrow.arrow-down {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}

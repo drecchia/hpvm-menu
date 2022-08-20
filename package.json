@@ -1,0 +1,35 @@
+{
+    "name": "hyper-parametrizable-vanilla-menu",
+    "version": "1.0.0",
+    "author": "Danilo T Recchia",
+    "main": "dist/hpvm-min.js",
+    "license": "CC-BY-NC-4.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/drecchia/hpvm-menu.git"
+    },
+    "description": "The best VanillaJS plugin for app off-canvas menus for your website and webapp.",
+    "keywords": [
+        "app",
+        "list",
+        "listview",
+        "megamenu",
+        "menu",
+        "mmenu",
+        "navigation",
+        "off-canvas",
+        "curtain",
+        "panels",
+        "submenu"
+    ],
+    "scripts": {
+        "build": "gulp default"
+    },
+    "devDependencies": {
+        "gulp": "^4.0.2",
+        "gulp-autoprefixer": "^8.0.0",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-minify": "^3.1.0"
+    }
+}

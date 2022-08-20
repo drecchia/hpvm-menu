@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hyper Parametrizable Vanilla Menu</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css"
+    integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+  <!-- <link rel="stylesheet" href="./src/css/iconbar.css" />
+  <link rel="stylesheet" href="./src/css/iconbar-tooltip.css" />
+  <link rel="stylesheet" href="./src/css/sidebar.css" />
+  <link rel="stylesheet" href="./src/css/sidebar-search.css" />
+  <link rel="stylesheet" href="./src/css/overlay.css" /> -->
+
+  <link rel="stylesheet" href="./dist/css/all.css" />
+
+  <!-- <link rel="stylesheet" href="./css/themes/dark-grey.css" /> -->
+
+  <!-- LIGTH GREY
+  /* PALETA DE CORES */
+  /* #555555, #e0e0e0, #a1a1a1, #616161, #3b3b3b */
+  -->
+
+  <style>
+    #menuItems.nav.menu-favoritos > li > a {
+      padding: 10px 15px 10px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    #menuItems.nav.menu-favoritos > li > a > div {
+      display: flex;
+      flex-direction: column;
+      width: -webkit-fill-available;
+    }
+
+    #menuItems.nav.menu-favoritos > li > a > div > span:nth-child(1) {
+      font-weight: bold;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav.menu-favoritos > li > a > div > span:nth-child(2) {
+      color: rgb(82, 82, 82);
+      font-style: italic;
+      width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #menuItems.nav.menu-alertas > ul > li > a {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+
+    #menuItems.nav.menu-alertas > ul > li > a > div:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #menuItems.nav.menu-alertas > ul > li > a > div:nth-child(1) > span:nth-child(1) {
+      font-weight: bold;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav.menu-alertas > ul > li > a > div:nth-child(1) > span:nth-child(2) {
+      color: rgb(82, 82, 82);
+      font-style: italic;
+    }
+
+    #menuItems.nav.menu-alertas > ul > li > a > div:nth-child(2) {
+      display: flex;
+      color: rgb(73, 73, 73);
+    }
+
+    #menuItems.nav .sidebar-anchor-no-href {
+      color: rgb(217 65 65 / 84%);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="icon-bar container">
+    <div class="icon-bar-top">
+      <!-- <a class="tooltip" href="#"><i class="fa fa-bell fa-beat" style="--fa-beat-scale: 2.5;"></i><span class="tooltiptext">Alertas</span></a>  -->
+    </div>
+    <div class="icon-bar-bottom">
+      <!-- <a class="tooltip icon-bar-item danger" href="#"><i class="fa fa-sign-out"></i><span class="tooltiptext">Sair</span></a> -->
+    </div>
+  </div>
+
+  <div id="overlay"><i class="fa-solid fa-sync fa-spin fa-5x is-loaded" style="--fa-animation-duration: 5s;"></i></div>
+
+  <div class='wrapper' />
+
+  <div class='sidebar'>
+    <div class='sidebar-widelogo'>
+      <img src="https://via.placeholder.com/220x55/e0e0e0/000000/?text=LOGO+HERE" alt="Logo" />
+    </div>
+    <div id='sidebarTitle' class='sidebar-title'>
+      Title Here
+    </div>
+    <div class='search'>
+      <input class='searchInput' placeholder='Procurar no menu...' type="text"
+        onkeyup="HpvMenu.sidebar.filterFn(this, 'menuItems')" />
+      <button class='btn btn-outline-success' type='button'><i class='fas fa-search'></i></button>
+    </div>
+    <ul id='menuItems' class='nav'>
+    </ul>
+    <div id='sideBarStatusText'>
+      <p>Nenhum item disponível</p>
+    </div>
+  </div>
+
+  <div id='content' class="content">
+    <iframe src="https://vortus.solutions/photon/welcome.html" name="iContent" id="iContent">
+      <p>Your browser does not support iframes.</p>
+    </iframe>
+  </div>
+
+  <!-- <script src="./src/js/iconbar.js"></script>
+  <script src="./src/js/sidebar.js"></script>
+  <script src="./src/js/sidebar-search.js"></script>
+  <script src="./src/js/overlay.js"></script>
+  <script src="./src/js/mixin.js"></script>
+  <script src="./src/js/fuzzy-search.js"></script> -->
+  
+  <script src="./dist/js/all.min.js"></script>
+  <script src="./entries.js"></script>
+
+  <script>
+   
+    // side bar
+    function handleSidebarClick(event, entry, item) {
+      if (item.href) {
+          // change iframe src
+          document.getElementById('iContent').src = item.href;
+          HpvMenu.mixin.closeSideBar();
+          HpvMenu.overlay.showLoading();
+      }
+    }
+
+    document.getElementById('iContent').onload = function () {
+      HpvMenu.overlay.hideLoading();
+    };
+
+    //////////////////////////////
+    // iconbar
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'classes': ['mini-logo'],
+      'innerHtml': '<img src="https://www.svgrepo.com/show/366969/drgn.svg" width="32" heigh="32">',
+      'tooltiptext': 'Vortus Solutions',
+      'onClick': function (event) {
+        // open site on new window
+        window.open('https://vortus.solutions', '_blank');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-house-chimney-user"></i>',
+      'tooltiptext': 'Central do Usuário',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'central_usuario');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-bell" style="--fa-beat-scale: 2.5;"></i>',
+      'tooltiptext': 'Alertas',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'alertas');
+
+        // event.currentTarget.firstChild.classList.add('fa-beat');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-star"></i>',
+      'tooltiptext': 'Favoritos',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'favoritos');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-location-dot"></i>',
+      'tooltiptext': 'Mapa',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'mapa');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-ranking-star"></i>',
+      'tooltiptext': 'Dashboard',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'dashboard');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-pencil"></i>',
+      'tooltiptext': 'Cadastros',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'cadastros');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-sheet-plastic"></i>',
+      'tooltiptext': 'Relatórios',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'relatorios');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-store"></i>',
+      'tooltiptext': 'Compras',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'compras');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa fa-database"></i>',
+      'tooltiptext': 'Dados',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'dados');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-top',
+      'innerHtml': '<i class="fa-solid fa-screwdriver-wrench"></i>',
+      'tooltiptext': 'Ferramentas',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'ferramentas');
+      }
+    });
+
+    // bottom
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-bottom',
+      'innerHtml': '<i class="fa-solid fa-plug"></i>',
+      'tooltiptext': 'Status',
+      'onClick': function (event) {
+        console.log('status clicked');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-bottom',
+      'classes': ['support'],
+      'innerHtml': '<i class="fa fa-circle-question"></i>',
+      'tooltiptext': 'Suporte',
+      'onClick': function (event) {
+        HpvMenu.mixin.handleIconBarClick(event, 'suporte');
+      }
+    });
+
+    HpvMenu.iconbar.registerEntry({
+      'parentCls': 'icon-bar-bottom',
+      'classes': ['danger'],
+      'innerHtml': '<i class="fa fa-sign-out"></i>',
+      'tooltiptext': 'Sair',
+      'onClick': function (event) {
+        console.log('sair clicked');
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'favoritos',
+      'title': 'Favoritos',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'savedPath' ],
+      },
+      'itens': [],
+      'loadItens': function () {
+        return HpvMenu.sidebar.fav;
+      },
+      'itemRenderer': function (target, entry, item, path) {
+        let domItem = HpvMenu.sidebar._createItem(target, entry, item, false);
+
+        let divText = document.createElement('div');       
+        let span1 = document.createElement('span');
+        let span2 = document.createElement('span');
+               
+        span1.innerHTML = item.title;
+        span2.innerHTML = item.savedPath.join(' > ');
+
+        divText.appendChild(span1);
+        divText.appendChild(span2);
+
+        domItem.firstChild.childNodes[1].replaceWith( divText );
+
+        return domItem;
+      },
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'mapa',
+      'title': 'Mapa',
+      'overlay': true,
+      'sortItens': true,
+      'search': false,
+      'itens': entries.mapa,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'dashboard',
+      'title': 'Dashboard',
+      'overlay': true,
+      'sortItens': true,
+      'search': false,
+      'itens': entries.dashboard,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'cadastros',
+      'title': 'Cadastros',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.cadastros,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'central_usuario',
+      'title': 'Central do Usuário',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.central_usuario,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'relatorios',
+      'title': 'Relatórios',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.relatorios,
+      'onItemClick': function (event, entry, item) {
+        console.log('item click rep: ', item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'compras',
+      'title': 'Compras',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.compras,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'suporte',
+      'title': 'Suporte',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.suporte,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'ferramentas',
+      'title': 'Ferramentas',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.ferramentas,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'dados',
+      'title': 'Dados',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'tags' ],
+      },
+      'itens': entries.dados,
+      'onItemClick': function (event, entry, item) {
+        handleSidebarClick(event, entry, item);
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'alertas',
+      'title': 'Alertas',
+      'overlay': true,
+      'sortItens': true,
+      'search': {
+        'enabled': true,
+        'mode': 'fuzzy',
+        'fields': [ 'title', 'subtitle' ],
+      },
+      'itens': [
+        {
+          'type': 'divide', 'title': 'Cliente A', 'childs': [
+            { 'type': 'entry', 'title': 'AAC0007', 'subtitle': 'Excesso de Velocidade', 'color': 'green' },
+            { 'type': 'entry', 'title': 'AAA0001', 'subtitle': 'Pânico Acionado', 'color': 'purple' },
+          ]
+        },
+        {
+          'type': 'divide', 'title': 'Cliente B', 'childs': [
+            { 'type': 'entry', 'title': 'AAA0002', 'subtitle': 'Sem Transmissão', 'color': 'white' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+            { 'type': 'entry', 'title': 'AAA0003', 'subtitle': 'Saída de Cerca', 'color': 'red' },
+          ]
+        },
+      ],
+      'itemRenderer': function (target, entry, item) {
+        let color = item.color || 'white';
+
+        let li = document.createElement('li');
+        let anchor = document.createElement('a');
+        let div = document.createElement('div');
+        let divTime = document.createElement('div');
+        let span1 = document.createElement('span');
+        let span2 = document.createElement('span');
+        
+        li.style.boxShadow = "inset 5px 0 0 " + color + ", inset 6px 0 0 #222";
+        span1.innerHTML = item.title;
+        span2.innerHTML = item.subtitle;
+        divTime.innerHTML = '15:29';
+
+        div.appendChild(span1);
+        div.appendChild(span2);
+        anchor.appendChild(div);
+        anchor.appendChild(divTime);
+        li.appendChild(anchor);
+
+        return li;
+      },
+      'onItemClick': function (event, entry, item) {
+        console.log('item click alertas: ', item);
+      }
+    });
+  </script>
+</body>
+
+</html>
