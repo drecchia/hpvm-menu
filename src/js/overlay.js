@@ -33,8 +33,8 @@ HpvMenu.overlay = {
 		document.getElementById('overlay').addEventListener('click', HpvMenu.overlay.clickHandler);
 	}, // show
 	
-	showLoading: function () {
-		HpvMenu.overlay.show(true, false);
+	showLoading: function  ( usingIconBar = true, usingSidebar = true ) {
+		HpvMenu.overlay.show( usingIconBar, usingSidebar );
 	
 		document.getElementById("overlay").firstChild.classList.remove('is-loaded');
 	
