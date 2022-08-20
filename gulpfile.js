@@ -6,7 +6,7 @@
 	$ gulp css		: Runs the "css" tasks.
 */
 
-const { parallel } = require('gulp');
+const { parallel, series } = require('gulp');
 
 const js = require('./gulp/js');
 const css = require('./gulp/css');
@@ -30,4 +30,11 @@ exports.js = (cb) => {
 */
 exports.css = (cb) => {
 	css.all(cb);
+};
+
+/*
+	$ gulp watch
+*/
+exports.watch = (cb) => {
+	parallel(series(js.all, js.watch), series(css.all, css.watch))(cb);
 };

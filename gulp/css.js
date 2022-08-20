@@ -70,3 +70,14 @@ const CssThemes = (cb, input, output) => {
         .pipe(dest(dist.outputFolder + '/themes'));
 };
 
+
+/** Put a watch on all files. */
+exports.watch = CSSwatch = cb => {
+    return watch(dist.files)
+        .on('change', path => {
+            console.log('Change detected to .scss file "' + path + '"');
+            series(Independent, AllInOne, AllInOneIconbar, AllInOneSidebar, CssThemes)(() => {
+                console.log('CSS compiled and concatenated.');
+            });
+    });
+};
