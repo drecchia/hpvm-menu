@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hyper Parametrizable Vanilla Menu</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css"
+    integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../../dist/css/sidebar-w-search.css" />
+
+  <style>
+    /* default is you are using iconbar */
+    body {
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+    }
+
+    .content {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body> 
+  <div class='wrapper' />
+
+  <div class='sidebar'>
+    <div class='sidebar-widelogo'>
+      <img src="https://via.placeholder.com/220x55/e0e0e0/000000/?text=LOGO+HERE" alt="Logo" />
+    </div>
+    <div id='sidebarTitle' class='sidebar-title'>
+      Title Here
+    </div>
+    <div class='search'>
+      <input class='searchInput' placeholder='Procurar no menu...' type="text"
+        onkeyup="HpvMenu.sidebar.filterFn(this, 'menuItems')" />
+      <button class='btn btn-outline-success' type='button'><i class='fas fa-search'></i></button>
+    </div>
+    <ul id='menuItems' class='nav'>
+    </ul>
+    <div id='sideBarStatusText'>
+      <p>No item available</p>
+    </div>
+  </div>
+
+  <div id='content' class="content">
+    Your content goes here!<br><br>
+    <button onclick="showSidebar1()">Show Sidebar 1</button><br><br>
+    <button onclick="closeSidebar()">Close Sidebar</button><br><br>
+  </div>
+
+  <script src="../../dist/js/sidebar-w-search.min.js"></script>
+
+  <script>
+    function showSidebar1() {
+      HpvMenu.sidebar.show('sidebar1');
+    }
+
+    function closeSidebar() {
+      HpvMenu.sidebar.close();
+    }
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'sidebar1',
+      'title': 'Sidebar Title 1',
+      'overlay': false,
+      'sortItens': false,
+      'search': true,
+      'itens': [
+        { 
+          'type': 'dropdown', 'title': 'Group 1', 'innerHtml': '<i class="fa-solid fa-cloud-sun"></i>', 'childs': [
+            { 'type': 'entry', 'title': 'Item 1.1', 'innerHtml': '<i class="fa-solid fa-anchor"></i>' },
+            { 'type': 'entry', 'title': 'Item 1.2', 'innerHtml': '<i class="fa-brands fa-app-store"></i>' }
+          ] 
+        },
+        { 
+          'type': 'dropdown', 'title': 'Group 2', 'innerHtml': '<i class="fa-solid fa-cloud"></i>', 'childs': [
+            { 'type': 'divide', 'title': 'From this nation', 'childs': [
+              { 'type': 'entry', 'title': 'Item 2.1', 'innerHtml': '<i class="fa-brands fa-facebook"></i>' },
+              { 'type': 'entry', 'title': 'Item 2.2', 'innerHtml': '<i class="fa-brands fa-google"></i>' }
+             ] 
+            },
+            { 'type': 'divide', 'title': 'From Others', 'childs': [
+              { 'type': 'entry', 'title': 'Item 3.1', 'innerHtml': '<i class="fa-solid fa-pizza-slice"></i>' },
+              { 'type': 'entry', 'title': 'Item 3.2', 'innerHtml': '<i class="fa-solid fa-child-reaching"></i>' }
+             ] 
+            },
+          ] 
+        },
+      ],
+      'onItemClick': function (event, entry, item) {
+        alert('Item ' + item.title + ' clicked!');
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'sidebar2',
+      'title': 'Sidebar Title 2',
+      'overlay': false,
+      'sortItens': true,
+      'search': true,
+      'itens': [
+        { 'type': 'entry', 'title': 'Item 2.1' },
+        { 'type': 'entry', 'title': 'Item 2.2' }
+      ],
+      'onItemClick': function (event, entry, item) {
+        alert('Item ' + item.title + ' clicked!');
+      }
+    });
+
+    HpvMenu.sidebar.registerEntry({
+      'id': 'sidebar3',
+      'title': 'Sidebar Title 3',
+      'overlay': false,
+      'sortItens': true,
+      'search': true,
+      'itens': []
+    });
+  </script>
+
+</body>
+
+</html>
