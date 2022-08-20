@@ -208,3 +208,11 @@ ul#menuItems:empty {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 }
+
+.sidebar-dropdown-child > li > a > i {
+	padding-right: 10px;
+}
+
+.sidebar-divide-child > li > a > i {
+	padding-right: 10px;
+}
