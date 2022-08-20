@@ -6,7 +6,7 @@ const concat = require('gulp-concat');
 
 /** Run all scripts. */
 exports.all = (cb) => {
-    return series(Independent, AllInOne, AllInOneIconbar, CssThemes)(cb);
+    return series(Independent, AllInOne, AllInOneIconbar, AllInOneSidebar, CssThemes)(cb);
 };
 
 const dist = {
@@ -20,6 +20,10 @@ const dist = {
     'iconbarAll': [ 
         'src/css/iconbar.css', 
         'src/css/iconbar-tooltip.css' 
+    ],
+    'sidebarAll': [ 
+        'src/css/sidebar.css',
+        'src/css/sidebar-search.css'
     ],
     'themes': [
         'src/css/themes/dark-grey.css',
@@ -41,6 +45,14 @@ const AllInOneIconbar = (cb, input, output) => {
         .pipe(autoprefixer())
         .pipe(cleancss())
         .pipe(concat('iconbar-w-tooltip.css'))
+        .pipe(dest(dist.outputFolder));
+};
+
+const AllInOneSidebar = (cb, input, output) => {
+    return src(dist.sidebarAll)
+        .pipe(autoprefixer())
+        .pipe(cleancss())
+        .pipe(concat('sidebar-w-search.css'))
         .pipe(dest(dist.outputFolder));
 };
 
