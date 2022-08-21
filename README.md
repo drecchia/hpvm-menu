@@ -45,6 +45,9 @@ This package can be installed with:
 
 Or download the [latest release](https://github.com/drecchia/hpvm-menu/dist).
 
+### CDN
+
+- [jsdeliver](https://www.jsdelivr.com/package/npm/hpvm-menu)
 
 
 ### Including Hpvm Menu
