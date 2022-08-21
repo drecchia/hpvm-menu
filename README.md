@@ -155,7 +155,7 @@ Hpvm currently has 2 themes, the default and Dark. To use Dark theme simply impo
 
 The Hpvm API offers a couple of methods to control components isolated or as a group ( mixin ).
 
-##### HpvMenu.iconbar.registerEntry(entry)
+#### HpvMenu.iconbar.registerEntry(entry)
 
 Register a new iconbar entry.
 
@@ -171,7 +171,7 @@ HpvMenu.iconbar.registerEntry({
 });
 ```
 
-##### HpvMenu.iconbar.setActive(el)
+#### HpvMenu.iconbar.setActive(el)
 
 Set programmatically an entry(el) of iconbar as active.
 
@@ -181,7 +181,7 @@ let firstAnchor = iconbar.getElementsByTagName('a')[0];
 HpvMenu.iconbar.setActive(firstAnchor);
 ```
 
-##### HpvMenu.iconbar.removeLastActive()
+#### HpvMenu.iconbar.removeLastActive()
 
 Deactivate any active entry on iconbar.
 
@@ -189,7 +189,7 @@ Deactivate any active entry on iconbar.
 HpvMenu.iconbar.removeLastActive();
 ```
 
-##### HpvMenu.sidebar.registerEntry(entry)
+#### HpvMenu.sidebar.registerEntry(entry)
 
 Register a new sidebar entry.
 
@@ -207,7 +207,7 @@ HpvMenu.sidebar.registerEntry({
 });
 ```
 
-##### HpvMenu.sidebar.show(id)
+#### HpvMenu.sidebar.show(id)
 
 Show sidebar with rendered content from an registered entry.
 
@@ -215,7 +215,7 @@ Show sidebar with rendered content from an registered entry.
 HpvMenu.sidebar.show('dashboard');
 ```
 
-##### HpvMenu.sidebar.close()
+#### HpvMenu.sidebar.close()
 
 Close sidebar if openned.
 
@@ -223,7 +223,7 @@ Close sidebar if openned.
 HpvMenu.sidebar.close();
 ```
 
-##### HpvMenu.overlay.show( isIconBarVisible, isSidebarVisible )
+#### HpvMenu.overlay.show( isIconBarVisible, isSidebarVisible )
 
 Show overlay above user content, parameters help calculate the initial position.
 
@@ -231,7 +231,7 @@ Show overlay above user content, parameters help calculate the initial position.
 HpvMenu.overlay.show(true, false);
 ```
 
-##### HpvMenu.overlay.hide()
+#### HpvMenu.overlay.hide()
 
 Hide overlay if active.
 
@@ -239,7 +239,7 @@ Hide overlay if active.
 HpvMenu.overlay.hide();
 ```
 
-##### HpvMenu.overlay.showLoading( isIconBarVisible, isSidebarVisible )
+#### HpvMenu.overlay.showLoading( isIconBarVisible, isSidebarVisible )
 
 Show overlay above user content with an spinning icon. Parameters help calculate the initial position.
 
@@ -247,7 +247,7 @@ Show overlay above user content with an spinning icon. Parameters help calculate
 HpvMenu.overlay.showLoading(true, false);
 ```
 
-##### HpvMenu.overlay.hideLoading()
+#### HpvMenu.overlay.hideLoading()
 
 Hide overlay and spinning if active.
 
@@ -255,7 +255,7 @@ Hide overlay and spinning if active.
 HpvMenu.overlay.hide();
 ```
 
-##### HpvMenu.mixin.closeSideBar()
+#### HpvMenu.mixin.closeSideBar()
 
 Closes sidebar, hides overlay and remove iconbar active entries.
 
@@ -263,7 +263,7 @@ Closes sidebar, hides overlay and remove iconbar active entries.
 HpvMenu.mixin.closeSideBar();
 ```
 
-##### HpvMenu.mixin.handleIconBarClick( event, id )
+#### HpvMenu.mixin.handleIconBarClick( event, id )
 
 Set iconbar entry as active, opens sidebar and display the overlay. Can be used on while registering iconbar entry with 'onClick' event handler.
 
@@ -278,7 +278,7 @@ HpvMenu.iconbar.registerEntry({
 });
 ```
 
-##### HpvMenu.mixin.setIconBarActive( el )
+#### HpvMenu.mixin.setIconBarActive( el )
 
 Wrapper around iconbar.setIconBarActive, closing the sidebar if users click on an open entry.
 
