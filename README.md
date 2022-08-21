@@ -47,7 +47,7 @@ Or download the [latest release](https://github.com/drecchia/hpvm-menu/dist).
 
 
 
-### Including HC Off-canvas Nav
+### Including Hpvm Menu
 
 #### Script and Css tag
 ```html
