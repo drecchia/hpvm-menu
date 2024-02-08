@@ -1,6 +1,6 @@
 {
     "name": "hpvm-menu",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "author": "Danilo T Recchia",
     "main": "dist/js/all.min.js",
     "license": "CC-BY-NC-4.0",
@@ -32,5 +32,8 @@
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "gulp-minify": "^3.1.0"
+    },
+    "dependencies": {
+        "hpvm-menu": "^1.0.0"
     }
 }
