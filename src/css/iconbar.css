@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	overflow: hidden;
-	height: 100vh;
+	/* height: 100vh; */
 	display: flex;
 }
 
@@ -9,11 +9,13 @@ body {
 	width: 100%;
 }
 
-#iContent {
-	height: 100vh;
+/* TEST ONLY */
+/* #iContent {
 	width: 100%;
 	border: none;
-}
+	height: 100vh;
+	height: calc(100vh - env(safe-area-inset-bottom)); 
+}*/
 
 .container {
 	display: flex;
@@ -35,7 +37,7 @@ body {
 .icon-bar {
 	width: 50px;
 	background-color: #555;
-	height: 100vh;
+	/* height: 100vh; */
 	box-shadow: inset -2px 0px 10px 0px #181818;
 }
 
