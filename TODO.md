@@ -1,8 +1,11 @@
 1. reconhecer entry.search.fields na busca normal e fuzzy
 2. reconhecer entry.search.mode
-3. fazer build dist
+3. custom favorites storage key
 4. subir para o npm
 5. documentar
+
+// custom scroll
+// https://codepen.io/stephenpaton-tech/full/JjRvGmY
 
 // modelo alternativo interessante
 // https://github.com/bedimcode/sidebar-menu-submenus
