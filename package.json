@@ -1,39 +1,39 @@
 {
-    "name": "hpvm-menu",
-    "version": "1.0.2",
-    "author": "Danilo T Recchia",
-    "main": "dist/js/all.min.js",
-    "license": "CC-BY-NC-4.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/drecchia/hpvm-menu.git"
-    },
-    "description": "Hyper Parametrizable Vanilla JS Menu, the best plugin for app off-canvas menus for your webapp.",
-    "keywords": [
-        "app",
-        "list",
-        "listview",
-        "megamenu",
-        "menu",
-        "mmenu",
-        "vanilla",
-        "navigation",
-        "off-canvas",
-        "curtain",
-        "panels",
-        "submenu"
-    ],
-    "scripts": {
-        "build": "gulp default"
-    },
-    "devDependencies": {
-        "gulp": "^4.0.2",
-        "gulp-autoprefixer": "^8.0.0",
-        "gulp-clean-css": "^4.3.0",
-        "gulp-concat": "^2.6.1",
-        "gulp-minify": "^3.1.0"
-    },
-    "dependencies": {
-        "hpvm-menu": "^1.0.0"
-    }
+	"name": "hpvm-menu",
+	"version": "1.0.3",
+	"author": "Danilo T Recchia",
+	"main": "dist/js/all.min.js",
+	"license": "CC-BY-NC-4.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/drecchia/hpvm-menu.git"
+	},
+	"description": "Hyper Parametrizable Vanilla JS Menu, the best plugin for app off-canvas menus for your webapp.",
+	"keywords": [
+		"app",
+		"list",
+		"listview",
+		"megamenu",
+		"menu",
+		"mmenu",
+		"vanilla",
+		"navigation",
+		"off-canvas",
+		"curtain",
+		"panels",
+		"submenu"
+	],
+	"scripts": {
+		"build": "gulp default"
+	},
+	"devDependencies": {
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^8.0.0",
+		"gulp-clean-css": "^4.3.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-minify": "^3.1.0"
+	},
+	"dependencies": {
+		"hpvm-menu": "^1.0.0"
+	}
 }
